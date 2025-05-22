@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E25606AD2DDDF75900BA54EB /* ToDoListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606AC2DDDF75600BA54EB /* ToDoListPresenter.swift */; };
+		E25606AF2DDE013D00BA54EB /* ToDoListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606AE2DDE013C00BA54EB /* ToDoListInteractor.swift */; };
+		E25606B12DDF2EB200BA54EB /* ToDoListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606B02DDF2EAF00BA54EB /* ToDoListRouter.swift */; };
 		E2AC2ECA2DDCD9D500B8A3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC22DDCD9D500B8A3F8 /* AppDelegate.swift */; };
 		E2AC2ECB2DDCD9D500B8A3F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC72DDCD9D500B8A3F8 /* SceneDelegate.swift */; };
 		E2AC2ECC2DDCD9D500B8A3F8 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC82DDCD9D500B8A3F8 /* ToDoListViewController.swift */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E25606AC2DDDF75600BA54EB /* ToDoListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListPresenter.swift; sourceTree = "<group>"; };
+		E25606AE2DDE013C00BA54EB /* ToDoListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListInteractor.swift; sourceTree = "<group>"; };
+		E25606B02DDF2EAF00BA54EB /* ToDoListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListRouter.swift; sourceTree = "<group>"; };
 		E2AC2EA62DDCD2F700B8A3F8 /* todo-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "todo-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2AC2EC22DDCD9D500B8A3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2AC2EC32DDCD9D500B8A3F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 		E2AC2ED62DDCDF5C00B8A3F8 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				E25606AC2DDDF75600BA54EB /* ToDoListPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -150,6 +157,7 @@
 		E2AC2ED72DDCDF6800B8A3F8 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
+				E25606AE2DDE013C00BA54EB /* ToDoListInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -157,6 +165,7 @@
 		E2AC2ED82DDCDF7500B8A3F8 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				E25606B02DDF2EAF00BA54EB /* ToDoListRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -255,7 +264,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25606AD2DDDF75900BA54EB /* ToDoListPresenter.swift in Sources */,
 				E2AC2ECA2DDCD9D500B8A3F8 /* AppDelegate.swift in Sources */,
+				E25606B12DDF2EB200BA54EB /* ToDoListRouter.swift in Sources */,
+				E25606AF2DDE013D00BA54EB /* ToDoListInteractor.swift in Sources */,
 				E2AC2EDF2DDCEC5300B8A3F8 /* ToDo.swift in Sources */,
 				E2AC2ECB2DDCD9D500B8A3F8 /* SceneDelegate.swift in Sources */,
 				E2AC2ECC2DDCD9D500B8A3F8 /* ToDoListViewController.swift in Sources */,

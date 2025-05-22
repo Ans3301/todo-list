@@ -7,6 +7,12 @@
 
 import UIKit
 
+protocol ToDoListViewProtocol: AnyObject {
+    var presenter: ToDoListPresenterProtocol? { get set }
+    
+    func showToDoList(toDoList: [ToDo])
+}
+
 final class ToDoListViewController: UIViewController {
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -17,8 +23,19 @@ final class ToDoListViewController: UIViewController {
         tableView.separatorInset = .zero
         return tableView
     }()
+        
+    private var toDoList: [ToDo] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
-    private var toDoList: [ToDo]!
+    var presenter: ToDoListPresenterProtocol?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewWillAppear()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +76,17 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Unable to dequeue ToDoTableViewCell")
         }
         cell.configure(toDo: toDoList[indexPath.row])
+        cell.statusButtonTapped = { [weak self] in
+            if let toDo = self?.toDoList[indexPath.row] {
+                self?.presenter?.updateToDoStatus(toDo: toDo)
+            }
+        }
         return cell
     }
 }
 
+extension ToDoListViewController: ToDoListViewProtocol {
+    func showToDoList(toDoList: [ToDo]) {
+        self.toDoList = toDoList
+    }
+}

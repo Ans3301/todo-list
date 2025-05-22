@@ -11,14 +11,12 @@ final class ToDoTableViewCell: UITableViewCell {
     private lazy var isDoneButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "circle"), for: .normal)
         return button
     }()
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
         label.font = .systemFont(ofSize: 16, weight: .medium)
         return label
     }()
@@ -26,10 +24,11 @@ final class ToDoTableViewCell: UITableViewCell {
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .white
         label.font = .systemFont(ofSize: 12)
         return label
     }()
+    
+    var statusButtonTapped: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -53,6 +52,12 @@ final class ToDoTableViewCell: UITableViewCell {
             isDoneButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             isDoneButton.widthAnchor.constraint(equalToConstant: 24)
         ])
+        
+        isDoneButton.addTarget(self, action: #selector(isDoneButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func isDoneButtonTapped() {
+        statusButtonTapped?()
     }
     
     private func setupTitleLabel() {
@@ -71,12 +76,33 @@ final class ToDoTableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
             descriptionLabel.leadingAnchor.constraint(equalTo: isDoneButton.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
     
     func configure(toDo: ToDo) {
-        titleLabel.text = toDo.title
         descriptionLabel.text = toDo.description
+        
+        if toDo.isDone {
+            isDoneButton.setImage(UIImage(named: "Icon"), for: .normal)
+            
+            let attributedText = NSMutableAttributedString(string: toDo.title)
+            attributedText.addAttribute(NSAttributedString.Key.strikethroughStyle, value: NSUnderlineStyle.single.rawValue, range: NSMakeRange(0, attributedText.length))
+            attributedText.addAttribute(NSAttributedString.Key.strikethroughColor, value: UIColor.white.withAlphaComponent(0.5), range: NSMakeRange(0, attributedText.length))
+            
+            titleLabel.attributedText = attributedText
+            titleLabel.textColor = .white.withAlphaComponent(0.5)
+            
+            descriptionLabel.textColor = .white.withAlphaComponent(0.5)
+            
+        } else {
+            isDoneButton.setImage(UIImage(named: "circle"), for: .normal)
+            
+            titleLabel.attributedText = .none
+            titleLabel.text = toDo.title
+            titleLabel.textColor = .white
+            
+            descriptionLabel.textColor = .white
+        }
     }
 }
