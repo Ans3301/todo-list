@@ -11,25 +11,24 @@ protocol ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol? { get set }
 
     func fetchToDoList()
-    func updateToDo(toDo: ToDo)
+    func updateToDoStatus(toDo: ToDo)
 }
 
 class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
 
-    private var toDoList: [ToDo] = [
-        ToDo(id: UUID(), title: "Buy milk", description: "Buy milk at the store near work", creationDate: Date(), isDone: false),
-        ToDo(id: UUID(), title: "Walk dog", description: "Don't forget to take an umbrella", creationDate: Date(), isDone: false)
-    ]
+    private var toDoList: [ToDo] {
+        return CoreDataManager.shared.fetchToDoList()
+    }
 
     func fetchToDoList() {
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 
-    func updateToDo(toDo: ToDo) {
-        if let index = toDoList.firstIndex(where: { $0.id == toDo.id }) {
-            toDoList[index].isDone.toggle()
-        }
+    func updateToDoStatus(toDo: ToDo) {
+        var updatedToDo = toDo
+        updatedToDo.isDone.toggle()
+        CoreDataManager.shared.updateToDo(toDo: updatedToDo)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 }

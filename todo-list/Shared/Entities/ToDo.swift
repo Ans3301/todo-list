@@ -14,3 +14,13 @@ struct ToDo {
     var creationDate: Date
     var isDone: Bool
 }
+
+extension ToDo {
+    init(from item: ToDoItem) {
+        self.id = item.id
+        self.title = item.title
+        self.description = item.desc
+        self.creationDate = item.creationDate
+        self.isDone = item.isDone
+    }
+}

@@ -28,7 +28,7 @@ class ToDoListPresenter: ToDoListPresenterProtocol {
     }
 
     func updateToDoStatus(toDo: ToDo) {
-        interactor?.updateToDo(toDo: toDo)
+        interactor?.updateToDoStatus(toDo: toDo)
     }
 
     func didFetchToDoList(toDoList: [ToDo]) {
