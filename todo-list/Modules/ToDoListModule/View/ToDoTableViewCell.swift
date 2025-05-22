@@ -28,16 +28,26 @@ final class ToDoTableViewCell: UITableViewCell {
         return label
     }()
     
+    private lazy var creationDateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 12)
+        label.textColor = .white.withAlphaComponent(0.5)
+        return label
+    }()
+    
     var statusButtonTapped: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = .clear
+        selectionStyle = .none
         
         setupIsDoneButton()
         setupTitleLabel()
         setupDescriptionLabel()
+        setupCreationDateLabel()
     }
 
     required init?(coder: NSCoder) {
@@ -80,8 +90,25 @@ final class ToDoTableViewCell: UITableViewCell {
         ])
     }
     
+    private func setupCreationDateLabel() {
+        contentView.addSubview(creationDateLabel)
+        
+        NSLayoutConstraint.activate([
+            creationDateLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 6),
+            creationDateLabel.leadingAnchor.constraint(equalTo: isDoneButton.trailingAnchor, constant: 8),
+            creationDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        ])
+    }
+    
+    private func formattedDate(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yy"
+        return formatter.string(from: date)
+    }
+    
     func configure(toDo: ToDo) {
         descriptionLabel.text = toDo.description
+        creationDateLabel.text = formattedDate(date: toDo.creationDate)
         
         if toDo.isDone {
             isDoneButton.setImage(UIImage(named: "Icon"), for: .normal)
