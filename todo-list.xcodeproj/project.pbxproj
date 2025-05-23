@@ -15,6 +15,7 @@
 		E25606BC2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606BA2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift */; };
 		E25606C02DDF60BA00BA54EB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606BF2DDF60B400BA54EB /* CoreDataManager.swift */; };
 		E25606C52DE08F6700BA54EB /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606C42DE08F6200BA54EB /* APIService.swift */; };
+		E25606C82DE0D5ED00BA54EB /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E25606C72DE0D5ED00BA54EB /* SwifterSwift */; };
 		E2AC2ECA2DDCD9D500B8A3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC22DDCD9D500B8A3F8 /* AppDelegate.swift */; };
 		E2AC2ECB2DDCD9D500B8A3F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC72DDCD9D500B8A3F8 /* SceneDelegate.swift */; };
 		E2AC2ECC2DDCD9D500B8A3F8 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC82DDCD9D500B8A3F8 /* ToDoListViewController.swift */; };
@@ -49,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25606C82DE0D5ED00BA54EB /* SwifterSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +233,7 @@
 			);
 			name = "todo-list";
 			packageProductDependencies = (
+				E25606C72DE0D5ED00BA54EB /* SwifterSwift */,
 			);
 			productName = "todo-list";
 			productReference = E2AC2EA62DDCD2F700B8A3F8 /* todo-list.app */;
@@ -260,6 +263,9 @@
 			);
 			mainGroup = E2AC2E9D2DDCD2F700B8A3F8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E25606C62DE0D5ED00BA54EB /* XCRemoteSwiftPackageReference "SwifterSwift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E2AC2EA72DDCD2F700B8A3F8 /* Products */;
 			projectDirPath = "";
@@ -524,6 +530,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E25606C62DE0D5ED00BA54EB /* XCRemoteSwiftPackageReference "SwifterSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwifterSwift/SwifterSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E25606C72DE0D5ED00BA54EB /* SwifterSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E25606C62DE0D5ED00BA54EB /* XCRemoteSwiftPackageReference "SwifterSwift" */;
+			productName = SwifterSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E25606B22DDF4D2A00BA54EB /* ToDoModel.xcdatamodeld */ = {

@@ -5,6 +5,7 @@
 //  Created by Мария Анисович on 20.05.2025.
 //
 
+import SwifterSwift
 import UIKit
 
 protocol ToDoListViewProtocol: AnyObject {
@@ -14,6 +15,23 @@ protocol ToDoListViewProtocol: AnyObject {
 }
 
 final class ToDoListViewController: UIViewController {
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.barTintColor = .black
+        searchBar.tintColor = .white
+        searchBar.searchTextField.backgroundColor = UIColor(hexString: "#272729")
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+            string: "Search",
+            attributes: [
+                .foregroundColor: UIColor.white.withAlphaComponent(0.5),
+            ]
+        )
+        searchBar.searchTextField.textColor = .white
+        searchBar.searchTextField.leftView?.tintColor = UIColor.white.withAlphaComponent(0.5)
+        return searchBar
+    }()
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,6 +42,7 @@ final class ToDoListViewController: UIViewController {
         return tableView
     }()
         
+    private var fullDoList: [ToDo] = []
     private var toDoList: [ToDo] = [] {
         didSet {
             tableView.reloadData()
@@ -42,7 +61,28 @@ final class ToDoListViewController: UIViewController {
         
         view.backgroundColor = .black
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
+        setupSearchBar()
         setupTableView()
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    private func setupSearchBar() {
+        view.addSubview(searchBar)
+        
+        searchBar.delegate = self
+        
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
     }
 
     private func setupTableView() {
@@ -59,6 +99,18 @@ final class ToDoListViewController: UIViewController {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
+    }
+}
+
+extension ToDoListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            toDoList = fullDoList
+        } else {
+            toDoList = fullDoList.filter {
+                $0.title.lowercased().contains(searchText.lowercased())
+            }
+        }
     }
 }
 
@@ -87,6 +139,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ToDoListViewController: ToDoListViewProtocol {
     func showToDoList(toDoList: [ToDo]) {
+        self.fullDoList = toDoList
         self.toDoList = toDoList
     }
 }

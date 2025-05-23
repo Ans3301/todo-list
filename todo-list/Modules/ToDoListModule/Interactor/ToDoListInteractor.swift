@@ -19,7 +19,7 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
 
     private let apiService = APIService()
-    
+
     private var toDoList: [ToDo] {
         return CoreDataManager.shared.fetchToDoList()
     }
@@ -28,7 +28,7 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
         if !UserDefaults.standard.bool(forKey: "isAppAlreadyLaunchedOnce") {
             Task {
                 do {
-                    let toDoList =  try await apiService.loadToDoList()
+                    let toDoList = try await apiService.loadToDoList()
                     await self.importToDoList(toDoList: toDoList)
                     UserDefaults.standard.set(true, forKey: "isAppAlreadyLaunchedOnce")
                 } catch {}
@@ -37,13 +37,13 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
             presenter?.didFetchToDoList(toDoList: toDoList)
         }
     }
-    
+
     @MainActor
     func importToDoList(toDoList: [ToDo]) {
         for toDo in toDoList {
             CoreDataManager.shared.addToDo(toDo: toDo)
         }
-        presenter?.didFetchToDoList(toDoList: toDoList)
+        presenter?.didFetchToDoList(toDoList: self.toDoList)
     }
 
     func updateToDoStatus(toDo: ToDo) {
