@@ -11,17 +11,38 @@ protocol ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol? { get set }
 
     func fetchToDoList()
+    func importToDoList(toDoList: [ToDo]) async
     func updateToDoStatus(toDo: ToDo)
 }
 
 class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
 
+    private let apiService = APIService()
+    
     private var toDoList: [ToDo] {
         return CoreDataManager.shared.fetchToDoList()
     }
 
     func fetchToDoList() {
+        if !UserDefaults.standard.bool(forKey: "isAppAlreadyLaunchedOnce") {
+            Task {
+                do {
+                    let toDoList =  try await apiService.loadToDoList()
+                    await self.importToDoList(toDoList: toDoList)
+                    UserDefaults.standard.set(true, forKey: "isAppAlreadyLaunchedOnce")
+                } catch {}
+            }
+        } else {
+            presenter?.didFetchToDoList(toDoList: toDoList)
+        }
+    }
+    
+    @MainActor
+    func importToDoList(toDoList: [ToDo]) {
+        for toDo in toDoList {
+            CoreDataManager.shared.addToDo(toDo: toDo)
+        }
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 
