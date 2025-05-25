@@ -41,11 +41,19 @@ final class ToDoListViewController: UIViewController {
         tableView.separatorInset = .zero
         return tableView
     }()
+    
+    private lazy var footerView: FooterView = {
+        let footerView = FooterView()
+        footerView.translatesAutoresizingMaskIntoConstraints = false
+        footerView.backgroundColor = UIColor(hexString: "#272729")
+        return footerView
+    }()
         
     private var fullDoList: [ToDo] = []
     private var toDoList: [ToDo] = [] {
         didSet {
             tableView.reloadData()
+            footerView.updateToDoCount(count: toDoList.count)
         }
     }
     
@@ -61,12 +69,18 @@ final class ToDoListViewController: UIViewController {
         
         view.backgroundColor = .black
         
+        title = "Задачи"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
         setupSearchBar()
         setupTableView()
+        setupFooterView()
     }
     
     @objc private func dismissKeyboard() {
@@ -79,7 +93,7 @@ final class ToDoListViewController: UIViewController {
         searchBar.delegate = self
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 120),
+            searchBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
@@ -94,10 +108,25 @@ final class ToDoListViewController: UIViewController {
         tableView.dataSource = self
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 172),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 202),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -83),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+        ])
+    }
+    
+    private func setupFooterView() {
+        footerView.addButtonButtonTapped = { [weak self] in
+            self?.presenter?.showToDoEdit(toDo: nil)
+        }
+        
+        view.addSubview(footerView)
+        
+        NSLayoutConstraint.activate([
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: 83),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
@@ -139,7 +168,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ToDoListViewController: ToDoListViewProtocol {
     func showToDoList(toDoList: [ToDo]) {
-        self.fullDoList = toDoList
+        fullDoList = toDoList
         self.toDoList = toDoList
     }
 }

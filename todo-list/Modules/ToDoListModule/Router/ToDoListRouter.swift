@@ -9,6 +9,8 @@ import UIKit
 
 protocol ToDoListRouterProtocol {
     static func createModule() -> UIViewController
+    
+    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?)
 }
 
 class ToDoListRouter: ToDoListRouterProtocol {
@@ -26,4 +28,14 @@ class ToDoListRouter: ToDoListRouterProtocol {
 
         return view
     }
+    
+    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?) {
+         let toDoEditViewController = ToDoEditViewController()
+         
+         guard let viewController = view as? UIViewController else {
+             fatalError("Invalid View Protocol type")
+         }
+         
+        viewController.navigationController?.pushViewController(toDoEditViewController, animated: false)
+     }
 }
