@@ -20,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         let toDoListView = ToDoListRouter.createModule()
         let navigationController = UINavigationController(rootViewController: toDoListView)
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationBar.tintColor = .systemYellow
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window

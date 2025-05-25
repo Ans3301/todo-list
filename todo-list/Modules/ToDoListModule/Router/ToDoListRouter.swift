@@ -30,7 +30,7 @@ class ToDoListRouter: ToDoListRouterProtocol {
     }
     
     func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?) {
-         let toDoEditViewController = ToDoEditViewController()
+        let toDoEditViewController = ToDoEditRouter.createModule(toDo: toDo)
          
          guard let viewController = view as? UIViewController else {
              fatalError("Invalid View Protocol type")

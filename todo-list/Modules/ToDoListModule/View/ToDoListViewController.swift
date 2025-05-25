@@ -70,9 +70,9 @@ final class ToDoListViewController: UIViewController {
         view.backgroundColor = .black
         
         title = "Задачи"
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationItem.backButtonTitle = "Назад"
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
