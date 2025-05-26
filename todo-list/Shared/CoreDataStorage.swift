@@ -5,6 +5,7 @@
 //  Created by Мария Анисович on 22.05.2025.
 //
 
+import os
 import CoreData
 
 protocol StorageProtocol {
@@ -52,7 +53,7 @@ final class CoreDataStorage: StorageProtocol {
 
             try context.save()
         } catch {
-            print("Failed to toggle isDone: \(error)")
+            Logger.mainLogger.error("Failed to save ToDo: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -67,7 +68,7 @@ final class CoreDataStorage: StorageProtocol {
             }
             return toDos
         } catch {
-            print("Failed to fetch tasks: \(error)")
+            Logger.mainLogger.error("Failed to fetch ToDoList: \(error.localizedDescription, privacy: .public)")
             return []
         }
     }
@@ -82,7 +83,7 @@ final class CoreDataStorage: StorageProtocol {
                 try context.save()
             }
         } catch {
-            print("Error deleting ToDoItem: \(error)")
+            Logger.mainLogger.error("Failed to delete ToDo: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Мария Анисович on 21.05.2025.
 //
 
+import os
 import UIKit
 
 protocol ToDoListInteractorProtocol {
@@ -38,7 +39,9 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
                     let toDoList = try await apiService.loadToDoList()
                     await self.importToDoList(toDoList: toDoList)
                     storageForKey.set(true, forKey: "isAppAlreadyLaunchedOnce")
-                } catch {}
+                } catch {
+                    Logger.mainLogger.error("Failed to load ToDoList: \(error.localizedDescription, privacy: .public)")
+                }
             }
         } else {
             presenter?.didFetchToDoList(toDoList: toDoList)
@@ -46,7 +49,7 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     }
 
     @MainActor
-    func importToDoList(toDoList: [ToDo]) {
+    private func importToDoList(toDoList: [ToDo]) {
         for toDo in toDoList {
             storage.saveToDo(toDo: toDo)
         }
