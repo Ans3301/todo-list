@@ -10,7 +10,7 @@ import UIKit
 protocol ToDoListRouterProtocol {
     static func createModule() -> UIViewController
 
-    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?)
+    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo)
 }
 
 class ToDoListRouter: ToDoListRouterProtocol {
@@ -29,7 +29,7 @@ class ToDoListRouter: ToDoListRouterProtocol {
         return view
     }
 
-    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?) {
+    func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo) {
         let toDoEditViewController = ToDoEditRouter.createModule(toDo: toDo)
 
         guard let viewController = view as? UIViewController else {

@@ -12,8 +12,9 @@ protocol ToDoEditPresenterProtocol {
     var interactor: ToDoEditInteractorProtocol? { get set }
     var router: ToDoEditRouter? { get set }
 
-    func viewDidLoad()
-    
+    func viewWillAppear()
+
+    func didGetToDo(toDo: ToDo)
     func didTapBackButton(toDo: ToDo)
 }
 
@@ -22,13 +23,17 @@ class ToDoEditPresenter: ToDoEditPresenterProtocol {
     var interactor: ToDoEditInteractorProtocol?
     var router: ToDoEditRouter?
 
-    func viewDidLoad() {
-        view?.showToDo(toDo: interactor?.toDo)
+    func viewWillAppear() {
+        interactor?.getToDo()
     }
-    
+
+    func didGetToDo(toDo: ToDo) {
+        view?.showToDo(toDo: toDo)
+    }
+
     func didTapBackButton(toDo: ToDo) {
         interactor?.saveToDo(toDo: toDo)
-        
+
         if let view = view {
             router?.navigateBackToToDoListScreen(from: view)
         }

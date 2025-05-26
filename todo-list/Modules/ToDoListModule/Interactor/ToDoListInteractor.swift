@@ -9,9 +9,6 @@ import UIKit
 
 protocol ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol? { get set }
-    var apiService: APIServiceProtocol { get set }
-    var storage: StorageProtocol { get set }
-    var storageForKey: StorageForKeyProtocol { get set }
 
     func fetchToDoList()
     func updateToDoStatus(toDo: ToDo)
@@ -20,9 +17,9 @@ protocol ToDoListInteractorProtocol {
 
 class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
-    var apiService: APIServiceProtocol
-    var storage: StorageProtocol
-    var storageForKey: StorageForKeyProtocol
+    private var apiService: APIServiceProtocol
+    private var storage: StorageProtocol
+    private var storageForKey: StorageForKeyProtocol
 
     init(apiService: APIServiceProtocol, storage: StorageProtocol, storageForKey: StorageForKeyProtocol) {
         self.apiService = apiService
@@ -51,14 +48,14 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     @MainActor
     func importToDoList(toDoList: [ToDo]) {
         for toDo in toDoList {
-            storage.addToDo(toDo: toDo)
+            storage.saveToDo(toDo: toDo)
         }
         presenter?.didFetchToDoList(toDoList: self.toDoList)
     }
 
     func updateToDoStatus(toDo: ToDo) {
         toDo.isDone.toggle()
-        storage.updateToDo(toDo: toDo)
+        storage.saveToDo(toDo: toDo)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 

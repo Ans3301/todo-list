@@ -8,8 +8,7 @@
 import CoreData
 
 protocol StorageProtocol {
-    func addToDo(toDo: ToDo)
-    func updateToDo(toDo: ToDo)
+    func saveToDo(toDo: ToDo)
     func fetchToDoList() -> [ToDo]
     func deleteToDo(id: UUID)
 }
@@ -31,29 +30,7 @@ final class CoreDataStorage: StorageProtocol {
         return persistentContainer.viewContext
     }
 
-    private func saveContext() {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("Failed to save context: \(error)")
-            }
-        }
-    }
-
-    func addToDo(toDo: ToDo) {
-        let toDoItem = ToDoItem(context: context)
-        toDoItem.id = toDo.id
-        toDoItem.title = toDo.title
-        toDoItem.desc = toDo.description
-        toDoItem.creationDate = toDo.creationDate
-        toDoItem.isDone = toDo.isDone
-
-        saveContext()
-    }
-
-    func updateToDo(toDo: ToDo) {
-        let context = CoreDataStorage.shared.context
+    func saveToDo(toDo: ToDo) {
         let request: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", toDo.id as CVarArg)
         request.fetchLimit = 1
@@ -64,9 +41,16 @@ final class CoreDataStorage: StorageProtocol {
                 item.desc = toDo.description
                 item.creationDate = toDo.creationDate
                 item.isDone = toDo.isDone
-
-                try context.save()
+            } else {
+                let toDoItem = ToDoItem(context: context)
+                toDoItem.id = toDo.id
+                toDoItem.title = toDo.title
+                toDoItem.desc = toDo.description
+                toDoItem.creationDate = toDo.creationDate
+                toDoItem.isDone = toDo.isDone
             }
+
+            try context.save()
         } catch {
             print("Failed to toggle isDone: \(error)")
         }
@@ -89,7 +73,6 @@ final class CoreDataStorage: StorageProtocol {
     }
 
     func deleteToDo(id: UUID) {
-        let context = CoreDataStorage.shared.context
         let request: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 

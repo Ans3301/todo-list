@@ -117,7 +117,7 @@ final class ToDoListViewController: UIViewController {
     
     private func setupFooterView() {
         footerView.onAddButtonTapped = { [weak self] in
-            self?.presenter?.showToDoEdit(toDo: nil)
+            self?.presenter?.showToDoEdit(toDo: ToDo(id: UUID(), title: "", description: "", creationDate: Date(), isDone: false))
         }
         
         view.addSubview(footerView)

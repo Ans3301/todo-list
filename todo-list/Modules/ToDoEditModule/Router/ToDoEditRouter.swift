@@ -8,16 +8,16 @@
 import UIKit
 
 protocol ToDoEditRouterProtocol {
-    static func createModule(toDo: ToDo?) -> UIViewController
+    static func createModule(toDo: ToDo) -> UIViewController
 
     func navigateBackToToDoListScreen(from view: ToDoEditViewProtocol)
 }
 
 class ToDoEditRouter: ToDoEditRouterProtocol {
-    static func createModule(toDo: ToDo?) -> UIViewController {
+    static func createModule(toDo: ToDo) -> UIViewController {
         let view = ToDoEditViewController()
         let presenter = ToDoEditPresenter()
-        let interactor = ToDoEditInteractor(storage: CoreDataStorage.shared)
+        let interactor = ToDoEditInteractor(toDo: toDo, storage: CoreDataStorage.shared)
         let router = ToDoEditRouter()
 
         view.presenter = presenter
@@ -25,7 +25,6 @@ class ToDoEditRouter: ToDoEditRouterProtocol {
         presenter.interactor = interactor
         presenter.router = router
         interactor.presenter = presenter
-        interactor.toDo = toDo
 
         return view
     }

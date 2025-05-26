@@ -13,7 +13,7 @@ protocol ToDoListPresenterProtocol {
     var router: ToDoListRouterProtocol? { get set }
 
     func viewWillAppear()
-    func showToDoEdit(toDo: ToDo?)
+    func showToDoEdit(toDo: ToDo)
     func updateToDoStatus(toDo: ToDo)
     func deleteToDo(toDo: ToDo)
 
@@ -29,7 +29,7 @@ class ToDoListPresenter: ToDoListPresenterProtocol {
         interactor?.fetchToDoList()
     }
 
-    func showToDoEdit(toDo: ToDo?) {
+    func showToDoEdit(toDo: ToDo) {
         guard let view = view else { return }
         router?.presentToDoEditScreen(from: view, toDo: toDo)
     }

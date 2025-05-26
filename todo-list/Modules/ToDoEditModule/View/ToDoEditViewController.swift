@@ -11,7 +11,7 @@ import UIKit
 protocol ToDoEditViewProtocol: AnyObject {
     var presenter: ToDoEditPresenterProtocol? { get set }
     
-    func showToDo(toDo: ToDo?)
+    func showToDo(toDo: ToDo)
 }
 
 final class ToDoEditViewController: UIViewController {
@@ -70,6 +70,11 @@ final class ToDoEditViewController: UIViewController {
     
     var presenter: ToDoEditPresenterProtocol?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        presenter?.viewWillAppear()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,8 +91,6 @@ final class ToDoEditViewController: UIViewController {
         setupCreationDateLabel()
         setupDescriptionTextView()
         setupDescriptionPlaceholderLabel()
-        
-        presenter?.viewDidLoad()
     }
     
     @objc private func dismissKeyboard() {
@@ -99,8 +102,6 @@ final class ToDoEditViewController: UIViewController {
 
         if !titleTextView.text.isEmpty && !descriptionTextView.text.isEmpty {
             guard let toDo = toDo else {
-                let newToDo = ToDo(id: UUID(), title: titleTextView.text, description: descriptionTextView.text, creationDate: Date(), isDone: false)
-                presenter?.didTapBackButton(toDo: newToDo)
                 return
             }
 
@@ -170,19 +171,18 @@ extension ToDoEditViewController: UITextViewDelegate {
 }
 
 extension ToDoEditViewController: ToDoEditViewProtocol {
-    func showToDo(toDo: ToDo?) {
+    func showToDo(toDo: ToDo) {
         self.toDo = toDo
         
-        if let toDo = toDo {
+        if !toDo.title.isEmpty && !toDo.description.isEmpty {
             titleTextView.text = toDo.title
-            creationDateLabel.text = formattedDate(date: toDo.creationDate)
             descriptionTextView.text = toDo.description
             
             titlePlaceholderLabel.isHidden = true
             descriptionPlaceholderLabel.isHidden = true
-        } else {
-            creationDateLabel.text = formattedDate(date: Date())
         }
+        
+        creationDateLabel.text = formattedDate(date: toDo.creationDate)
     }
     
     private func formattedDate(date: Date) -> String {
