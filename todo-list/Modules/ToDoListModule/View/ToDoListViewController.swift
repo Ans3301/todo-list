@@ -116,7 +116,7 @@ final class ToDoListViewController: UIViewController {
     }
     
     private func setupFooterView() {
-        footerView.addButtonButtonTapped = { [weak self] in
+        footerView.onAddButtonTapped = { [weak self] in
             self?.presenter?.showToDoEdit(toDo: nil)
         }
         
@@ -157,7 +157,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
             fatalError("Unable to dequeue ToDoTableViewCell")
         }
         cell.configure(toDo: toDoList[indexPath.row])
-        cell.statusButtonTapped = { [weak self] in
+        cell.onStatusButtonTapped = { [weak self] in
             if let toDo = self?.toDoList[indexPath.row] {
                 self?.presenter?.updateToDoStatus(toDo: toDo)
             }

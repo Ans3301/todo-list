@@ -26,7 +26,7 @@ final class FooterView: UIView {
         return button
     }()
 
-    var addButtonButtonTapped: (() -> Void)?
+    var onAddButtonTapped: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,7 +44,7 @@ final class FooterView: UIView {
 
         NSLayoutConstraint.activate([
             countLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            countLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            countLabel.topAnchor.constraint(equalTo: topAnchor, constant: 18)
         ])
     }
     
@@ -53,7 +53,7 @@ final class FooterView: UIView {
 
         NSLayoutConstraint.activate([
             addButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            addButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            addButton.centerYAnchor.constraint(equalTo: countLabel.centerYAnchor),
             addButton.heightAnchor.constraint(equalToConstant: 28),
             addButton.widthAnchor.constraint(equalToConstant: 28),
         ])
@@ -62,7 +62,7 @@ final class FooterView: UIView {
     }
     
     @objc private func addButtonTapped() {
-        addButtonButtonTapped?()
+        onAddButtonTapped?()
     }
 
     func updateToDoCount(count: Int) {

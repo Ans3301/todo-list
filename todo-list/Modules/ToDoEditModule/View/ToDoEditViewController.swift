@@ -97,7 +97,7 @@ final class ToDoEditViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        if isMovingFromParent && !titleTextView.text.isEmpty && !descriptionTextView.text.isEmpty {
+        if !titleTextView.text.isEmpty && !descriptionTextView.text.isEmpty {
             guard let toDo = toDo else {
                 let newToDo = ToDo(id: UUID(), title: titleTextView.text, description: descriptionTextView.text, creationDate: Date(), isDone: false)
                 presenter?.didTapBackButton(toDo: newToDo)

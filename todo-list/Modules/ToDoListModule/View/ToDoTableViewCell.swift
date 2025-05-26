@@ -36,7 +36,7 @@ final class ToDoTableViewCell: UITableViewCell {
         return label
     }()
     
-    var statusButtonTapped: (() -> Void)?
+    var onStatusButtonTapped: (() -> Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -67,7 +67,7 @@ final class ToDoTableViewCell: UITableViewCell {
     }
     
     @objc private func isDoneButtonTapped() {
-        statusButtonTapped?()
+        onStatusButtonTapped?()
     }
     
     private func setupTitleLabel() {
