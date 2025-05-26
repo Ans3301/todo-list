@@ -24,7 +24,6 @@ final class ToDoEditRouter: ToDoEditRouterProtocol {
         presenter.view = view
         presenter.interactor = interactor
         presenter.router = router
-        interactor.presenter = presenter
 
         return view
     }
