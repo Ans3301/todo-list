@@ -9,6 +9,9 @@ import UIKit
 
 protocol ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol? { get set }
+    var apiService: APIServiceProtocol { get set }
+    var storage: StorageProtocol { get set }
+    var storageForKey: StorageForKeyProtocol { get set }
 
     func fetchToDoList()
     func updateToDoStatus(toDo: ToDo)
@@ -17,20 +20,27 @@ protocol ToDoListInteractorProtocol {
 
 class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
+    var apiService: APIServiceProtocol
+    var storage: StorageProtocol
+    var storageForKey: StorageForKeyProtocol
 
-    private let apiService = APIService()
+    init(apiService: APIServiceProtocol, storage: StorageProtocol, storageForKey: StorageForKeyProtocol) {
+        self.apiService = apiService
+        self.storage = storage
+        self.storageForKey = storageForKey
+    }
 
     private var toDoList: [ToDo] {
-        return CoreDataManager.shared.fetchToDoList()
+        return storage.fetchToDoList()
     }
 
     func fetchToDoList() {
-        if !UserDefaults.standard.bool(forKey: "isAppAlreadyLaunchedOnce") {
+        if !storageForKey.bool(forKey: "isAppAlreadyLaunchedOnce") {
             Task {
                 do {
                     let toDoList = try await apiService.loadToDoList()
                     await self.importToDoList(toDoList: toDoList)
-                    UserDefaults.standard.set(true, forKey: "isAppAlreadyLaunchedOnce")
+                    storageForKey.set(true, forKey: "isAppAlreadyLaunchedOnce")
                 } catch {}
             }
         } else {
@@ -41,19 +51,19 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     @MainActor
     func importToDoList(toDoList: [ToDo]) {
         for toDo in toDoList {
-            CoreDataManager.shared.addToDo(toDo: toDo)
+            storage.addToDo(toDo: toDo)
         }
         presenter?.didFetchToDoList(toDoList: self.toDoList)
     }
 
     func updateToDoStatus(toDo: ToDo) {
         toDo.isDone.toggle()
-        CoreDataManager.shared.updateToDo(toDo: toDo)
+        storage.updateToDo(toDo: toDo)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
-    
+
     func deleteToDo(toDo: ToDo) {
-        CoreDataManager.shared.deleteToDo(id: toDo.id)
+        storage.deleteToDo(id: toDo.id)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 }

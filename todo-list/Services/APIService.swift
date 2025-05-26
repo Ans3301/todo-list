@@ -18,8 +18,12 @@ struct ToDoAPIModel: Codable {
     let userId: Int
 }
 
-final class APIService {
-    func loadToDoList() async throws ->  [ToDo] {
+protocol APIServiceProtocol {
+    func loadToDoList() async throws -> [ToDo]
+}
+
+final class APIService: APIServiceProtocol {
+    func loadToDoList() async throws -> [ToDo] {
         let urlString = "https://dummyjson.com/todos"
         guard let url = URL(string: urlString) else {
             throw URLError(.badURL)
@@ -34,7 +38,7 @@ final class APIService {
             let newToDo = ToDo(id: UUID(), title: toDo.todo, description: toDo.todo, creationDate: Date(), isDone: toDo.completed)
             toDoList.append(newToDo)
         }
-        
+
         return toDoList
     }
 }

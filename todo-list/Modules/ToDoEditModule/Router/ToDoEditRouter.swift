@@ -9,7 +9,7 @@ import UIKit
 
 protocol ToDoEditRouterProtocol {
     static func createModule(toDo: ToDo?) -> UIViewController
-    
+
     func navigateBackToToDoListScreen(from view: ToDoEditViewProtocol)
 }
 
@@ -17,7 +17,7 @@ class ToDoEditRouter: ToDoEditRouterProtocol {
     static func createModule(toDo: ToDo?) -> UIViewController {
         let view = ToDoEditViewController()
         let presenter = ToDoEditPresenter()
-        let interactor = ToDoEditInteractor()
+        let interactor = ToDoEditInteractor(storage: CoreDataStorage.shared)
         let router = ToDoEditRouter()
 
         view.presenter = presenter

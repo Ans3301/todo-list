@@ -9,7 +9,7 @@ import UIKit
 
 protocol ToDoListRouterProtocol {
     static func createModule() -> UIViewController
-    
+
     func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?)
 }
 
@@ -17,7 +17,7 @@ class ToDoListRouter: ToDoListRouterProtocol {
     static func createModule() -> UIViewController {
         let view = ToDoListViewController()
         let presenter = ToDoListPresenter()
-        let interactor = ToDoListInteractor()
+        let interactor = ToDoListInteractor(apiService: APIService(), storage: CoreDataStorage.shared, storageForKey: UserDefaultsStorage.shared)
         let router = ToDoListRouter()
 
         view.presenter = presenter
@@ -28,14 +28,14 @@ class ToDoListRouter: ToDoListRouterProtocol {
 
         return view
     }
-    
+
     func presentToDoEditScreen(from view: ToDoListViewProtocol, toDo: ToDo?) {
         let toDoEditViewController = ToDoEditRouter.createModule(toDo: toDo)
-         
-         guard let viewController = view as? UIViewController else {
-             fatalError("Invalid View Protocol type")
-         }
-         
+
+        guard let viewController = view as? UIViewController else {
+            fatalError("Invalid View Protocol type")
+        }
+
         viewController.navigationController?.pushViewController(toDoEditViewController, animated: false)
-     }
+    }
 }

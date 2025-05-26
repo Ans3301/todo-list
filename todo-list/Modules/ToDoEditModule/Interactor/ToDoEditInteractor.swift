@@ -9,20 +9,26 @@ import UIKit
 
 protocol ToDoEditInteractorProtocol {
     var presenter: ToDoEditPresenterProtocol? { get set }
+    var storage: StorageProtocol { get set }
     var toDo: ToDo? { get set }
-    
+
     func saveToDo(toDo: ToDo)
 }
 
 class ToDoEditInteractor: ToDoEditInteractorProtocol {
     var presenter: ToDoEditPresenterProtocol?
+    var storage: StorageProtocol
     var toDo: ToDo?
-    
+
+    init(storage: StorageProtocol) {
+        self.storage = storage
+    }
+
     func saveToDo(toDo: ToDo) {
         if self.toDo == nil {
-            CoreDataManager.shared.addToDo(toDo: toDo)
+            storage.addToDo(toDo: toDo)
         } else {
-            CoreDataManager.shared.updateToDo(toDo: toDo)
+            storage.updateToDo(toDo: toDo)
         }
     }
 }

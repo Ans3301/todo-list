@@ -7,8 +7,15 @@
 
 import CoreData
 
-class CoreDataManager {
-    static let shared = CoreDataManager()
+protocol StorageProtocol {
+    func addToDo(toDo: ToDo)
+    func updateToDo(toDo: ToDo)
+    func fetchToDoList() -> [ToDo]
+    func deleteToDo(id: UUID)
+}
+
+final class CoreDataStorage: StorageProtocol {
+    static let shared = CoreDataStorage()
 
     private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "ToDoModel")
@@ -46,7 +53,7 @@ class CoreDataManager {
     }
 
     func updateToDo(toDo: ToDo) {
-        let context = CoreDataManager.shared.context
+        let context = CoreDataStorage.shared.context
         let request: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", toDo.id as CVarArg)
         request.fetchLimit = 1
@@ -82,7 +89,7 @@ class CoreDataManager {
     }
 
     func deleteToDo(id: UUID) {
-        let context = CoreDataManager.shared.context
+        let context = CoreDataStorage.shared.context
         let request: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 

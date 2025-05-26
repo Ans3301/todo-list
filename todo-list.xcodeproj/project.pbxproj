@@ -13,7 +13,7 @@
 		E25606B42DDF4D2A00BA54EB /* ToDoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E25606B22DDF4D2A00BA54EB /* ToDoModel.xcdatamodeld */; };
 		E25606BB2DDF55A400BA54EB /* ToDoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606B92DDF55A400BA54EB /* ToDoItem+CoreDataClass.swift */; };
 		E25606BC2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606BA2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift */; };
-		E25606C02DDF60BA00BA54EB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606BF2DDF60B400BA54EB /* CoreDataManager.swift */; };
+		E25606C02DDF60BA00BA54EB /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606BF2DDF60B400BA54EB /* CoreDataStorage.swift */; };
 		E25606C52DE08F6700BA54EB /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606C42DE08F6200BA54EB /* APIService.swift */; };
 		E25606C82DE0D5ED00BA54EB /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E25606C72DE0D5ED00BA54EB /* SwifterSwift */; };
 		E25606CA2DE0E89C00BA54EB /* ToDoEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606C92DE0E89C00BA54EB /* ToDoEditViewController.swift */; };
@@ -21,6 +21,7 @@
 		E25606CE2DE349EC00BA54EB /* ToDoEditRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606CD2DE349E100BA54EB /* ToDoEditRouter.swift */; };
 		E25606D02DE34A0200BA54EB /* ToDoEditInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606CF2DE349FF00BA54EB /* ToDoEditInteractor.swift */; };
 		E25606D22DE34A2500BA54EB /* ToDoEditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606D12DE34A2100BA54EB /* ToDoEditPresenter.swift */; };
+		E25606D62DE49D2500BA54EB /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25606D52DE49D2100BA54EB /* UserDefaultsStorage.swift */; };
 		E2AC2ECA2DDCD9D500B8A3F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC22DDCD9D500B8A3F8 /* AppDelegate.swift */; };
 		E2AC2ECB2DDCD9D500B8A3F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC72DDCD9D500B8A3F8 /* SceneDelegate.swift */; };
 		E2AC2ECC2DDCD9D500B8A3F8 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AC2EC82DDCD9D500B8A3F8 /* ToDoListViewController.swift */; };
@@ -37,13 +38,14 @@
 		E25606B32DDF4D2A00BA54EB /* ToDoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDoModel.xcdatamodel; sourceTree = "<group>"; };
 		E25606B92DDF55A400BA54EB /* ToDoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ToDoItem+CoreDataClass.swift"; path = "todo-list/Shared/ToDoItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E25606BA2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ToDoItem+CoreDataProperties.swift"; path = "todo-list/Shared/ToDoItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E25606BF2DDF60B400BA54EB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E25606BF2DDF60B400BA54EB /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		E25606C42DE08F6200BA54EB /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		E25606C92DE0E89C00BA54EB /* ToDoEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditViewController.swift; sourceTree = "<group>"; };
 		E25606CB2DE0F0DA00BA54EB /* FooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterView.swift; sourceTree = "<group>"; };
 		E25606CD2DE349E100BA54EB /* ToDoEditRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditRouter.swift; sourceTree = "<group>"; };
 		E25606CF2DE349FF00BA54EB /* ToDoEditInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditInteractor.swift; sourceTree = "<group>"; };
 		E25606D12DE34A2100BA54EB /* ToDoEditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoEditPresenter.swift; sourceTree = "<group>"; };
+		E25606D52DE49D2100BA54EB /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		E2AC2EA62DDCD2F700B8A3F8 /* todo-list.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "todo-list.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2AC2EC22DDCD9D500B8A3F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2AC2EC32DDCD9D500B8A3F8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -149,7 +151,8 @@
 		E2AC2ED22DDCDE2000B8A3F8 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E25606BF2DDF60B400BA54EB /* CoreDataManager.swift */,
+				E25606D52DE49D2100BA54EB /* UserDefaultsStorage.swift */,
+				E25606BF2DDF60B400BA54EB /* CoreDataStorage.swift */,
 				E2AC2ED32DDCDE3500B8A3F8 /* Entities */,
 				E25606B22DDF4D2A00BA54EB /* ToDoModel.xcdatamodeld */,
 			);
@@ -316,11 +319,12 @@
 				E2AC2EDF2DDCEC5300B8A3F8 /* ToDo.swift in Sources */,
 				E2AC2ECB2DDCD9D500B8A3F8 /* SceneDelegate.swift in Sources */,
 				E25606CA2DE0E89C00BA54EB /* ToDoEditViewController.swift in Sources */,
-				E25606C02DDF60BA00BA54EB /* CoreDataManager.swift in Sources */,
+				E25606C02DDF60BA00BA54EB /* CoreDataStorage.swift in Sources */,
 				E2AC2ECC2DDCD9D500B8A3F8 /* ToDoListViewController.swift in Sources */,
 				E2AC2EDD2DDCE23400B8A3F8 /* ToDoTableViewCell.swift in Sources */,
 				E25606C52DE08F6700BA54EB /* APIService.swift in Sources */,
 				E25606D22DE34A2500BA54EB /* ToDoEditPresenter.swift in Sources */,
+				E25606D62DE49D2500BA54EB /* UserDefaultsStorage.swift in Sources */,
 				E25606CE2DE349EC00BA54EB /* ToDoEditRouter.swift in Sources */,
 				E25606BB2DDF55A400BA54EB /* ToDoItem+CoreDataClass.swift in Sources */,
 				E25606BC2DDF55A400BA54EB /* ToDoItem+CoreDataProperties.swift in Sources */,
