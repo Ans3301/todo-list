@@ -15,6 +15,7 @@ protocol ToDoListPresenterProtocol {
     func viewWillAppear()
     func showToDoEdit(toDo: ToDo?)
     func updateToDoStatus(toDo: ToDo)
+    func deleteToDo(toDo: ToDo)
 
     func didFetchToDoList(toDoList: [ToDo])
 }
@@ -35,6 +36,10 @@ class ToDoListPresenter: ToDoListPresenterProtocol {
 
     func updateToDoStatus(toDo: ToDo) {
         interactor?.updateToDoStatus(toDo: toDo)
+    }
+    
+    func deleteToDo(toDo: ToDo) {
+        interactor?.deleteToDo(toDo: toDo)
     }
 
     func didFetchToDoList(toDoList: [ToDo]) {

@@ -11,8 +11,8 @@ protocol ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol? { get set }
 
     func fetchToDoList()
-    func importToDoList(toDoList: [ToDo]) async
     func updateToDoStatus(toDo: ToDo)
+    func deleteToDo(toDo: ToDo)
 }
 
 class ToDoListInteractor: ToDoListInteractorProtocol {
@@ -50,6 +50,11 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
         var updatedToDo = toDo
         updatedToDo.isDone.toggle()
         CoreDataManager.shared.updateToDo(toDo: updatedToDo)
+        presenter?.didFetchToDoList(toDoList: toDoList)
+    }
+    
+    func deleteToDo(toDo: ToDo) {
+        CoreDataManager.shared.deleteToDo(id: toDo.id)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
 }

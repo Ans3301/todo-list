@@ -164,6 +164,37 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        let todo = toDoList[indexPath.row]
+
+        return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: nil) { _ in
+            let editAction = UIAction(title: "Редактировать", image: UIImage(systemName: "pencil")) { [weak self] _ in
+                self?.presenter?.showToDoEdit(toDo: todo)
+            }
+
+            let deleteAction = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
+                self?.presenter?.deleteToDo(toDo: todo)
+            }
+
+            return UIMenu(title: "", children: [editAction, deleteAction])
+        }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview?
+    {
+        guard let indexPath = configuration.identifier as? IndexPath,
+              let cell = tableView.cellForRow(at: indexPath)
+        else {
+            return nil
+        }
+
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = UIColor(hexString: "#272729")
+
+        return UITargetedPreview(view: cell.contentView, parameters: parameters)
+    }
 }
 
 extension ToDoListViewController: ToDoListViewProtocol {

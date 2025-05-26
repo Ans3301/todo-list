@@ -173,7 +173,12 @@ extension ToDoEditViewController: ToDoEditViewProtocol {
         self.toDo = toDo
         
         if let toDo = toDo {
+            titleTextView.text = toDo.title
             creationDateLabel.text = formattedDate(date: toDo.creationDate)
+            descriptionTextView.text = toDo.description
+            
+            titlePlaceholderLabel.isHidden = true
+            descriptionPlaceholderLabel.isHidden = true
         } else {
             creationDateLabel.text = formattedDate(date: Date())
         }

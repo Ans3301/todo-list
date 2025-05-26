@@ -72,8 +72,7 @@ class CoreDataManager {
             let toDoItems = try context.fetch(fetchRequest)
             var toDos: [ToDo] = []
             for toDoItem in toDoItems {
-                let toDo = ToDo(from: toDoItem)
-                toDos.append(toDo)
+                toDos.append(ToDo(from: toDoItem))
             }
             return toDos
         } catch {
