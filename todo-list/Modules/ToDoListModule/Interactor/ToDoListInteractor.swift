@@ -56,7 +56,7 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     func updateToDoStatus(toDo: ToDo) {
         toDo.isDone.toggle()
         storage.saveToDo(toDo: toDo)
-        presenter?.didFetchToDoList(toDoList: toDoList)
+        presenter?.didUpdateToDoStatus(toDo: toDo)
     }
 
     func deleteToDo(toDo: ToDo) {

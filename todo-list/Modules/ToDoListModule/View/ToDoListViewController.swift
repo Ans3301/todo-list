@@ -12,6 +12,7 @@ protocol ToDoListViewProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     
     func showToDoList(toDoList: [ToDo])
+    func showUpdatedToDo(updatedToDo: ToDo)
 }
 
 final class ToDoListViewController: UIViewController {
@@ -149,7 +150,7 @@ extension ToDoListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 106
+        return 90
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -201,5 +202,17 @@ extension ToDoListViewController: ToDoListViewProtocol {
     func showToDoList(toDoList: [ToDo]) {
         fullDoList = toDoList
         self.toDoList = toDoList
+    }
+    
+    func showUpdatedToDo(updatedToDo: ToDo) {
+        if let fullIndex = fullDoList.firstIndex(where: { $0.id == updatedToDo.id }) {
+            fullDoList[fullIndex] = updatedToDo
+        }
+
+        if let index = toDoList.firstIndex(where: { $0.id == updatedToDo.id }) {
+            toDoList[index] = updatedToDo
+            let indexPath = IndexPath(row: index, section: 0)
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 }
