@@ -13,7 +13,7 @@ protocol ToDoEditRouterProtocol {
     func navigateBackToToDoListScreen(from view: ToDoEditViewProtocol)
 }
 
-class ToDoEditRouter: ToDoEditRouterProtocol {
+final class ToDoEditRouter: ToDoEditRouterProtocol {
     static func createModule(toDo: ToDo) -> UIViewController {
         let view = ToDoEditViewController()
         let presenter = ToDoEditPresenter()

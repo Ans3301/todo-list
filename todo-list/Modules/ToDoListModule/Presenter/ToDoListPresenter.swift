@@ -21,7 +21,7 @@ protocol ToDoListPresenterProtocol {
     func didUpdateToDoStatus(toDo: ToDo)
 }
 
-class ToDoListPresenter: ToDoListPresenterProtocol {
+final class ToDoListPresenter: ToDoListPresenterProtocol {
     weak var view: ToDoListViewProtocol?
     var interactor: ToDoListInteractorProtocol?
     var router: ToDoListRouterProtocol?

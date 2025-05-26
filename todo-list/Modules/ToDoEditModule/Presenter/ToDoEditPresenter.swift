@@ -14,21 +14,18 @@ protocol ToDoEditPresenterProtocol {
 
     func viewWillAppear()
 
-    func didGetToDo(toDo: ToDo)
     func didTapBackButton(toDo: ToDo)
 }
 
-class ToDoEditPresenter: ToDoEditPresenterProtocol {
+final class ToDoEditPresenter: ToDoEditPresenterProtocol {
     weak var view: ToDoEditViewProtocol?
     var interactor: ToDoEditInteractorProtocol?
     var router: ToDoEditRouter?
 
     func viewWillAppear() {
-        interactor?.getToDo()
-    }
-
-    func didGetToDo(toDo: ToDo) {
-        view?.showToDo(toDo: toDo)
+        if let interactor = interactor {
+            view?.showToDo(toDo: interactor.getToDo())
+        }
     }
 
     func didTapBackButton(toDo: ToDo) {

@@ -16,7 +16,7 @@ protocol ToDoListInteractorProtocol {
     func deleteToDo(toDo: ToDo)
 }
 
-class ToDoListInteractor: ToDoListInteractorProtocol {
+final class ToDoListInteractor: ToDoListInteractorProtocol {
     var presenter: ToDoListPresenterProtocol?
     private var apiService: APIServiceProtocol
     private var storage: StorageProtocol
