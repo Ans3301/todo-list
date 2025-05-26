@@ -47,9 +47,8 @@ class ToDoListInteractor: ToDoListInteractorProtocol {
     }
 
     func updateToDoStatus(toDo: ToDo) {
-        var updatedToDo = toDo
-        updatedToDo.isDone.toggle()
-        CoreDataManager.shared.updateToDo(toDo: updatedToDo)
+        toDo.isDone.toggle()
+        CoreDataManager.shared.updateToDo(toDo: toDo)
         presenter?.didFetchToDoList(toDoList: toDoList)
     }
     

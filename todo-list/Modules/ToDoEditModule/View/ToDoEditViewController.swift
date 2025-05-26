@@ -103,9 +103,10 @@ final class ToDoEditViewController: UIViewController {
                 presenter?.didTapBackButton(toDo: newToDo)
                 return
             }
-                
-            let updatedToDo = ToDo(id: toDo.id, title: titleTextView.text, description: descriptionTextView.text, creationDate: toDo.creationDate, isDone: toDo.isDone)
-            presenter?.didTapBackButton(toDo: updatedToDo)
+
+            toDo.title = titleTextView.text
+            toDo.description = descriptionTextView.text
+            presenter?.didTapBackButton(toDo: toDo)
         }
     }
     
