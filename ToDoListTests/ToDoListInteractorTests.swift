@@ -5,7 +5,6 @@
 //  Created by Мария Анисович on 26.05.2025.
 //
 
-
 @testable import todo_list
 import XCTest
 
@@ -88,7 +87,7 @@ final class ToDoListInteractorTests: XCTestCase {
         }
     }
 
-    func testFetchToDoList_FirstLaunch_ImportsDataFromAPI() {
+    func testFetchToDoListFirstLaunch() {
         let expectation = XCTestExpectation(description: "Wait for fetchToDoList to complete")
 
         let presenter = MockPresenter(expectation: expectation)
@@ -97,38 +96,38 @@ final class ToDoListInteractorTests: XCTestCase {
         let keyStorage = MockStorageForKey()
 
         apiService.toDosToReturn = [ToDo(id: UUID(), title: "Test", description: "", creationDate: Date(), isDone: false)]
-        let sut = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
-        sut.presenter = presenter
+        let interactor = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
+        interactor.presenter = presenter
 
-        sut.fetchToDoList()
+        interactor.fetchToDoList()
 
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation])
 
         XCTAssertTrue(presenter.didFetchToDoListCalled)
         XCTAssertEqual(presenter.fetchedToDoList.count, 1)
         XCTAssertTrue(keyStorage.bool(forKey: "isAppAlreadyLaunchedOnce"))
     }
 
-    func testFetchToDoList_NotFirstLaunch_LoadsFromStorage() {
+    func testFetchToDoListNotFirstLaunch() {
         let presenter = MockPresenter()
         let storage = MockStorage()
         let apiService = MockAPIService()
         let keyStorage = MockStorageForKey()
         keyStorage.set(true, forKey: "isAppAlreadyLaunchedOnce")
 
-        storage.storedToDos = [ToDo(id: UUID(), title: "Local", description: "", creationDate: Date(), isDone: false)]
+        storage.storedToDos = [ToDo(id: UUID(), title: "Test", description: "", creationDate: Date(), isDone: false)]
 
-        let sut = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
-        sut.presenter = presenter
+        let interactor = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
+        interactor.presenter = presenter
 
-        sut.fetchToDoList()
+        interactor.fetchToDoList()
 
         XCTAssertTrue(presenter.didFetchToDoListCalled)
         XCTAssertEqual(presenter.fetchedToDoList.count, 1)
-        XCTAssertEqual(presenter.fetchedToDoList.first?.title, "Local")
+        XCTAssertEqual(presenter.fetchedToDoList.first?.title, "Test")
     }
 
-    func testUpdateToDoStatus_TogglesDoneAndSaves() {
+    func testUpdateToDoStatus() {
         let presenter = MockPresenter()
         let storage = MockStorage()
         let apiService = MockAPIService()
@@ -137,16 +136,16 @@ final class ToDoListInteractorTests: XCTestCase {
         let todo = ToDo(id: UUID(), title: "Test", description: "", creationDate: Date(), isDone: false)
         storage.storedToDos = [todo]
 
-        let sut = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
-        sut.presenter = presenter
+        let interactor = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
+        interactor.presenter = presenter
 
-        sut.updateToDoStatus(toDo: todo)
+        interactor.updateToDoStatus(toDo: todo)
 
         XCTAssertTrue(presenter.didUpdateToDoStatusCalled)
         XCTAssertEqual(storage.storedToDos.first?.isDone, true)
     }
 
-    func testDeleteToDo_RemovesItemAndNotifiesPresenter() {
+    func testDeleteToDo() {
         let presenter = MockPresenter()
         let storage = MockStorage()
         let apiService = MockAPIService()
@@ -155,10 +154,10 @@ final class ToDoListInteractorTests: XCTestCase {
         let todo = ToDo(id: UUID(), title: "Delete", description: "", creationDate: Date(), isDone: false)
         storage.storedToDos = [todo]
 
-        let sut = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
-        sut.presenter = presenter
+        let interactor = ToDoListInteractor(apiService: apiService, storage: storage, storageForKey: keyStorage)
+        interactor.presenter = presenter
 
-        sut.deleteToDo(toDo: todo)
+        interactor.deleteToDo(toDo: todo)
 
         XCTAssertTrue(presenter.didFetchToDoListCalled)
         XCTAssertTrue(storage.storedToDos.isEmpty)
